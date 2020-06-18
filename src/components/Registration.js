@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-// import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
-// const url = "http://localhost:8082/users"
+const url = "http://localhost:8082/users"
 
 
 export const Registration = () => {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-// import { useHistory } from 'react-router-dom'
-// import { useDispatch, useSelector } from 'react-redux'
-// import { fetchUser } from '../reducers/users'
+import { useHistory } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchUser } from '../reducers/users'
 
 
 export const Login = () => {
@@ -9,14 +9,11 @@ export const Login = () => {
   const [password, setPassword] = useState("")
   const history = useHistory()
   const dispatch = useDispatch()
-  const failed = useSelector(state => state.ui.isLoginFailed)
 
   const handleSignin = (event) => {
     event.preventDefault()
     dispatch(fetchUser({ email, password }))
-    if(!failed) {
-      history.push(`/`)
-    }
+    history.push(`/userpage`)
   }
 
   const reDirect = () => {
@@ -30,28 +27,38 @@ export const Login = () => {
         <label>
           Email 
           <input
+            type="email"
+            required
+            value={email}
+            onChange={event => setEmail(event.target.value)}
+          />
+        </label>
+
+        <label>
+          Password
+          <input
             type="password"
             required
             value={password}
             onChange={event => setPassword(event.target.value)}
           />
-          </label>
-          {failed && <div className="error-message">Incorrect user and/or password</div>}
+        </label>
 
-          <button 
-            className="form-button" 
-            type="submit" 
-            onClick={handleSignin}
-          >
-            Login
-          </button>
-          <button
-            className="form-button"
-            type="button"
-            onClick={reDirect}
-          >
-            Not a member?
-          </button>
+        <button 
+          className="form-button" 
+          type="submit" 
+          onClick={handleSignin}
+        >
+          Login
+        </button>
+        
+        <button
+          className="form-button"
+          type="button"
+          onClick={reDirect}
+        >
+          Not a member?
+        </button>
       </form>
     </div>
   )

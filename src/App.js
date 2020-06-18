@@ -1,58 +1,33 @@
-import React, { useEffect, useState } from 'react'
-// import { GuestForm } from './components/GuestForm'
-// import { GuestPosts } from './components/GuestPosts'
+import React from 'react'
+import { Provider } from 'react-redux'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { users } from 'reducers/users'
+import { Login } from './components/Login'
+import { Registration } from './components/Registration'
+import { StartPage } from './components/StartPage'
+import { UserPage } from './components/UserPage'
+
+const reducer = combineReducers({
+  users: users.reducer
+})
+
+const store = configureStore( { reducer })
 
 
 export const App = () => {
-  const [messages, setMessages] = useState([])
-  const [postedMessage, setPostedMessage] = useState("")
-  const [loading, setLoading] = useState(true)
-
-  
-  // useEffect(() => {
-  //   fetch("http://localhost:8082")
-  //     .then(res => res.json())
-  //     .then(json => {
-  //       setMessages(json)
-  //       setLoading(false)
-  //     })
-  // }, [postedMessage])
-
-  // const onFormSubmit = post => {
-  //   setPostedMessage(post)
-  // }
-
-  // const onMessageLiked = (likedMessageId) => {
-  //   const updatedPosts = messages.map((message) => {
-  //     if(message._id === likedMessageId) {
-  //       message.likes +=1
-  //     }
-  //     return message
-  //   })
-  //   setMessages(updatedPosts)
-  // }
-
-
   return (
-    <div className="main-container">
-      <h1>Guest Book</h1>
-
-
-      Find me in src/app.js!
-    </div>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Route path="/" exact>
+          <StartPage />
+        </Route>
+        <Switch>
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/registration" component={Registration} />
+          <Route exact path="/userpage" component={UserPage} />
+        </Switch>
+      </BrowserRouter>
+    </Provider>
   )
 }
-
-
-// <GuestForm onFormSubmit={onFormSubmit} />
-
-// {loading && <h4>Waiting for some exciting messages...</h4>}
-
-// {messages.map(message => (
-//   <GuestPosts 
-//     key={message._id}
-//     message={message}
-//     likes={message.likes}
-//     onMessageLiked={onMessageLiked}
-//   />
-// ))}

@@ -1,5 +1,5 @@
 import React from 'react'
-// import Timestamp from 'react-timeago'
+import TimeStamp from 'react-timeago'
 import { LikeButton } from './LikeButton'
 
 
